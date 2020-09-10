@@ -31,7 +31,8 @@ namespace ManageRemoteCompanions
         {
             if (Settings.Instance.Enabled && Settings.Instance.ApplyInventoryPatch && rightMemberRoster.Contains(Hero.MainHero.CharacterObject))
             {
-                TroopRoster newRoster = new TroopRoster();
+                //TroopRoster newRoster = new TroopRoster();
+                TroopRoster newRoster = TroopRoster.CreateDummyTroopRoster();
                 newRoster.Add(rightMemberRoster);
                 PatchInventoryDefaults.DefaultCharacterEquipments.Clear();
 

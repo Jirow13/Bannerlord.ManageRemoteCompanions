@@ -1,6 +1,7 @@
-﻿using MCM.Abstractions.Attributes;
+﻿using MCM.Abstractions.Settings.Base.Global;
+using MCM.Abstractions.Attributes;
 using MCM.Abstractions.Attributes.v2;
-using MCM.Abstractions.Settings.Base.Global;
+
 
 namespace ManageRemoteCompanions
 {
@@ -14,7 +15,7 @@ namespace ManageRemoteCompanions
 
 
         [SettingPropertyBool("Enabled", Order = 1, RequireRestart = false, HintText = "Toggle this mod on or off.")]
-        [SettingPropertyGroup("Enabled", IsMainToggle = true)]
+        [SettingPropertyGroup("Enabled")]
         public bool Enabled { get; set; } = true;
 
         [SettingPropertyBool("Charcter Upgrades", Order = 2, RequireRestart = false, HintText = "Allows allocating perks, attribute points and focus points for remote companions.")]
@@ -26,7 +27,7 @@ namespace ManageRemoteCompanions
         public bool ApplyInventoryPatch { get; set; } = false;
 
         [SettingPropertyBool("Enable Manage Troops", Order = 4, RequireRestart = false, HintText = "Enable the management of party troops from the Clan Parties screen. Just clicking on the party will open the management UI. A stable version will move this functionality to a separate button.")]
-        [SettingPropertyGroup("Enabled/Manage Troops [EXPERIMENTAL]", IsMainToggle = true)]
+        [SettingPropertyGroup("Enabled/Manage Troops [EXPERIMENTAL]")]
         public bool ManageTroops { get; set; } = false;
 
         [SettingPropertyBool("Manage Troops of Companion Parties", Order = 5, RequireRestart = false, HintText = "Enables troop management for Clan Parties.")]

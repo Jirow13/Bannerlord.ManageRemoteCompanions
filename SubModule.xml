@@ -1,7 +1,8 @@
-﻿<Module>
-	<Name value="Manage Remote Companions"/>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Module>
+	<Name value="Manage Remote Companions - Jiro's Fix"/>
 	<Id value="ManageRemoteCompanions"/>
-	<Version value="v3.0.1"/>
+	<Version value="v4.0.1"/>
 	<SingleplayerModule value="true"/>
 	<MultiplayerModule value="false"/>
 	<Official value="false"/>
@@ -11,21 +12,17 @@
 		<DependedModule Id="Sandbox"/>
 		<DependedModule Id="CustomBattle"/>
 		<DependedModule Id="StoryMode" />
+		<DependedModule Id="Bannerlord.Harmony" />
+		<DependedModule Id="Bannerlord.UIExtenderEx" />
+		<DependedModule Id="Bannerlord.ButterLib" />
+		<DependedModule Id="Bannerlord.MBOptionScreen" />
+		<DependedModule Id="Bannerlord.MBOptionScreen.MCMv3" />
 	</DependedModules>
 	<SubModules>
 		<SubModule>
 			<Name value="ManageRemoteCompanions"/>
 			<DLLName value="ManageRemoteCompanions.dll"/>
 			<SubModuleClassType value="ManageRemoteCompanions.Main"/>
-			<Tags>
-				<Tag key="DedicatedServerType" value="none" />
-				<Tag key="IsNoRenderModeElement" value="false" />
-			</Tags>
-		</SubModule>
-		<SubModule>
-			<Name value="MCMv3 Integrated Loader"/>
-			<DLLName value="MCMv3.dll"/>
-			<SubModuleClassType value="MCM.IntegratedLoaderSubModule"/>
 			<Tags>
 				<Tag key="DedicatedServerType" value="none" />
 				<Tag key="IsNoRenderModeElement" value="false" />
