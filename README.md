@@ -9,6 +9,7 @@ If you have the campaign setting enabled to auto-allocate points and perks, then
 
 As of v2.0.0, you can also manage their inventories from afar. This is disabled by default for now, but can be enabled in Mod Options section of the ESC Menu.
 As of v2.1.0, this now extends to your spouse and adult children as well.
+As of v4.0.1, requires Mod Config Manager v4 to be loaded as a separate mod (along with its dependencies). 
 
 In light of the new inventory management feature, I've changed the name of this mod from Upgrade Remote Companions to Manage Remote Companions to better reflect the features of the mod.
 
