@@ -1,3 +1,5 @@
+A fork of RadthorDax's excellent Bannerlord Mod, updated for e1.5.1+: 
+
 # [Manage Remote Companions](https://www.nexusmods.com/mountandblade2bannerlord/mods/698)
 A mod for Mount &amp; Blade II: Bannerlord to manage remote companions and adult family members.
 _____________________
@@ -12,6 +14,7 @@ In light of the new inventory management feature, I've changed the name of this 
 
 
 ## Game Versions:
+- ☑ e1.5.1 Release
 - ☑ e1.4.1 BETA
 - ☑ e1.4.0
 
