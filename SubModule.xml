@@ -2,10 +2,11 @@
 <Module>
 	<Name value="Manage Remote Companions - Jiro's Fix"/>
 	<Id value="ManageRemoteCompanions"/>
-	<Version value="v4.5.1"/>
+	<Version value="v1.5.4.0"/>
 	<SingleplayerModule value="true"/>
 	<MultiplayerModule value="false"/>
 	<Official value="false"/>
+	<Url value="https://www.nexusmods.com/mountandblade2bannerlord/mods/2194" />
 	<DependedModules>
 		<DependedModule Id="Native"/>
 		<DependedModule Id="SandBoxCore"/>

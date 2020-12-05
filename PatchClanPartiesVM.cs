@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.CampaignSystem.ViewModelCollection.ClanManagement;
 using TaleWorlds.CampaignSystem.ViewModelCollection.ClanManagement.Categories;
+using TaleWorlds.InputSystem;
 
 namespace ManageRemoteCompanions
 {
@@ -12,11 +13,11 @@ namespace ManageRemoteCompanions
     {
         public static void Postfix(ClanPartiesVM __instance)
         {
-            if (canManageTroops(__instance.CurrentSelectedParty))
+            if (CanManageTroops(__instance.CurrentSelectedParty) && Input.IsKeyDown(InputKey.LeftAlt ))
                 PartyScreenManager.OpenScreenAsManageTroops(__instance.CurrentSelectedParty.Party.MobileParty);
         }
 
-        private static bool canManageTroops(ClanPartyItemVM p)
+        private static bool CanManageTroops(ClanPartyItemVM p)
         {
             if (p != null && p.Party != null && p.Party.MobileParty != null && Settings.Instance.ManageTroops)
             {

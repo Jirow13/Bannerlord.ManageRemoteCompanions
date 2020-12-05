@@ -1,7 +1,14 @@
 ﻿using HarmonyLib;
 using System.Collections.Generic;
+using System.Reflection;
+using System.Linq;
+using System.Dynamic;
+using System;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.Core;
+using TaleWorlds.CampaignSystem.ViewModelCollection;
+using TaleWorlds.Core.ViewModelCollection;
+using TaleWorlds.Localization;
 
 namespace ManageRemoteCompanions
 {
@@ -24,21 +31,25 @@ namespace ManageRemoteCompanions
         }
     }
 
+    /* This Isn't Working Right */
     [HarmonyPatch(typeof(InventoryLogic), "InitializeRosters")]
-    internal class PatchInventoryInit
+    internal class PatchInventoryInitRosters
     {
-        public static void Prefix(ref TroopRoster rightMemberRoster)
+
+        static bool Prefix(InventoryLogic __instance, ref ItemRoster[] ____rosters, ItemRoster leftItemRoster, ItemRoster rightItemRoster, ref TroopRoster rightMemberRoster, CharacterObject initialCharacterOfRightRoster)
         {
+            //typeof(InventoryLogic).GetMethod("InitializeRosters", BindingFlags.NonPublic | BindingFlags.Instance).Invoke(__instance, new object[] { leftItemRoster, rightItemRoster, rightMemberRoster, initialCharacterOfRightRoster });//pass whatever you want into this method... you don't need to use the original parameter
+            
             if (Settings.Instance.Enabled && Settings.Instance.ApplyInventoryPatch && rightMemberRoster.Contains(Hero.MainHero.CharacterObject))
             {
-                //TroopRoster newRoster = new TroopRoster();
                 TroopRoster newRoster = TroopRoster.CreateDummyTroopRoster();
                 newRoster.Add(rightMemberRoster);
                 PatchInventoryDefaults.DefaultCharacterEquipments.Clear();
 
+
                 foreach (Hero hero in Clan.PlayerClan.Heroes)
                 {
-                    if (hero.IsAlive && !hero.IsChild && hero != Hero.MainHero && !newRoster.Contains(hero.CharacterObject))
+                    if (hero.IsAlive && hero.IsActive && !hero.IsChild && hero != Hero.MainHero && !newRoster.Contains(hero.CharacterObject))
                     {
                         newRoster.AddToCounts(hero.CharacterObject, 1);
                         PatchInventoryDefaults.SetDefault(hero.CharacterObject);
@@ -53,9 +64,15 @@ namespace ManageRemoteCompanions
                         PatchInventoryDefaults.SetDefault(hero.CharacterObject);
                     }
                 }
-
                 rightMemberRoster = newRoster;
+                ____rosters[0] = leftItemRoster;
+                ____rosters[1] = rightItemRoster;
+                typeof(InventoryLogic).GetField("<RightMemberRoster>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance).SetValue(__instance, rightMemberRoster);
+                typeof(InventoryLogic).GetField("<InitialEquipmentCharacter>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance).SetValue(__instance, initialCharacterOfRightRoster);
+                rightItemRoster.RemoveZeroCounts();
+                typeof(InventoryLogic).GetMethod("SetCurrentStateAsInitial", BindingFlags.NonPublic | BindingFlags.Instance).Invoke(__instance, null);
             }
+            return false;
         }
     }
 
@@ -70,4 +87,71 @@ namespace ManageRemoteCompanions
                         PatchInventoryDefaults.ResetCharacter(c);
         }
     }
+
+    /*
+    [HarmonyPatch(typeof(SPInventoryVM), "SPInventoryVM")]
+    public class SPInventoryVMPatch
+    {
+        static void Postfix(SPInventoryVM __instance, SelectorVM<SelectorItemVM> ____characterList )
+        {
+             //_charList = null;
+            //typeof(SelectorVM<SelectorItemVM>).GetField("<_characterList>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(__instance);
+            //__instance._characterList = new SelectorVM<SelectorItemVM>(0, new Action<SelectorVM<SelectorItemVM>>(__instance.OnCharacterSelected));
+
+            foreach (Hero hero in Clan.PlayerClan.Heroes)
+            {
+                var isAlreadyOnList = ____characterList.ItemList.Where(e => e.StringItem == hero.Name.ToString());
+                if (hero.IsAlive && hero.IsActive && !hero.IsChild && hero != Hero.MainHero && isAlreadyOnList.ToList().Count > 0 )
+                {
+                    ____characterList.AddItem(new SelectorItemVM(hero.Name));
+                }
+            }
+
+            /*
+            foreach (Hero hero in Clan.PlayerClan.Companions)
+            {
+                if (hero.IsAlive && hero.IsPlayerCompanion && !newRoster.Contains(hero.CharacterObject))
+                {
+                    newRoster.AddToCounts(hero.CharacterObject, 1);
+                    PatchInventoryDefaults.SetDefault(hero.CharacterObject);
+                }
+            }
+            */
+            //typeof(SelectorVM<SelectorItemVM>).GetField("<_characterList>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance).SetValue(__instance, _charList);
+            /*
+            return;
+        }
+
+        static bool Prepare()
+        {
+            return true;
+        }
+    }
+    */
+
+    [HarmonyPatch(typeof(SPInventoryVM), "CharacterList", MethodType.Getter)]
+    internal class SPInventoryVMPatch
+    {
+        static void Postfix(SelectorVM<SelectorItemVM> ____characterList)
+        {
+            
+            foreach (Hero hero in Clan.PlayerClan.Heroes)
+            {
+                //var isAlreadyOnList = ____characterList.ItemList.Where(e => e.StringItem == hero.Name.ToString());
+                bool isAlreadyOnList = ____characterList.ItemList.Where(e => e.StringItem == hero.Name.ToString()).Any();
+                if (hero.IsAlive && hero.IsActive && !hero.IsChild && hero != Hero.MainHero && isAlreadyOnList == false)
+                {
+                    ____characterList.AddItem(new SelectorItemVM(hero.Name));
+                }
+            }
+
+            return;
+        }
+
+        static bool Prepare()
+        {
+            return true;
+        }
+    }
+
 }

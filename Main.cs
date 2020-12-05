@@ -2,6 +2,7 @@
 using System;
 using System.Windows.Forms;
 using TaleWorlds.MountAndBlade;
+using TaleWorlds.CampaignSystem;
 
 namespace ManageRemoteCompanions
 {
@@ -13,7 +14,7 @@ namespace ManageRemoteCompanions
 
             try
             {
-                new Harmony("com.radthordax.bannerlord.ManageRemoteCompanions").PatchAll();
+                new Harmony("com.bannerlord.ManageRemoteCompanions").PatchAll();
             }
             catch (Exception e)
             {

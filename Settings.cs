@@ -26,20 +26,20 @@ namespace ManageRemoteCompanions
         [SettingPropertyGroup("Enabled")]
         public bool ApplyInventoryPatch { get; set; } = false;
 
-        [SettingPropertyBool("Enable Manage Troops", Order = 4, RequireRestart = false, HintText = "Enable the management of party troops from the Clan Parties screen. Just clicking on the party will open the management UI. A stable version will move this functionality to a separate button.")]
-        [SettingPropertyGroup("Enabled/Manage Troops [EXPERIMENTAL]")]
+        [SettingPropertyBool("Enable Manage Troops (ALT + Click)", Order = 4, RequireRestart = false, HintText = "Enable the management of party troops from the Clan Parties screen. Press ALT + click on the party to open the management UI.")]
+        [SettingPropertyGroup("Enabled/Manage Troops")]
         public bool ManageTroops { get; set; } = false;
 
         [SettingPropertyBool("Manage Troops of Companion Parties", Order = 5, RequireRestart = false, HintText = "Enables troop management for Clan Parties.")]
-        [SettingPropertyGroup("Enabled/Manage Troops [EXPERIMENTAL]")]
+        [SettingPropertyGroup("Enabled/Manage Troops")]
         public bool ManageParties { get; set; } = true;
 
         [SettingPropertyBool("Manage Troops of Companion Caravans", Order = 6, RequireRestart = false, HintText = "Enables troop management for Clan Caravans.")]
-        [SettingPropertyGroup("Enabled/Manage Troops [EXPERIMENTAL]")]
+        [SettingPropertyGroup("Enabled/Manage Troops")]
         public bool ManageCaravans { get; set; } = true;
 
         [SettingPropertyBool("Manage Settlement Garrisons", Order = 7, RequireRestart = false, HintText = "Enables troop management for Clan Settlement Garrisons.")]
-        [SettingPropertyGroup("Enabled/Manage Troops [EXPERIMENTAL]")]
+        [SettingPropertyGroup("Enabled/Manage Troops")]
         public bool ManageGarrisons { get; set; } = false;
     }
 }
