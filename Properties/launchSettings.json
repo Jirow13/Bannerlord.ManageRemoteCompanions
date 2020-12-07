@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "Bannerlord": {
+      "commandName": "Executable",
+      "executablePath": "$(GameFolder)\\bin\\Win64_Shipping_Client\\Bannerlord.exe",
+      "commandLineArgs": "/singleplayer _MODULES_*Bannerlord.Harmony*BetterExceptionWindow*Bannerlord.ButterLib*Bannerlord.UIExtenderEx*Bannerlord.MBOptionScreen*Bannerlord.MBOptionScreen.ModLib*Bannerlord.MBOptionScreen.MCMv3*Native*SandBoxCore*CustomBattle*Sandbox*StoryMode*Aragas.AltSaveMissingModuleFix*CombatBandage*CraftedItemCopyright*Ctrl_Auto_Smelts*CurryFavorByKillingBandits*CustomSpawns*DefectionOverhaul*DiplomacyFixes*EconomyTweak_h*ExitSettlement*ExtendedFamily*HeroesMustDie*HousesCalradia*ImprovedGarrisons*InterestingClans*InterestingCompanions*JTPrisonerRecruitment*KaosesPartySizes*KillBanditsRaiseRelations*LordRetinueUptier*UsefullCompanions*MCTRDecayedisRevived*ManageRemoteCompanions*NPCRevamp*NobleNobles*Pacemaker*PartyAIOverhaulCommands*PartyScreenEnhancements*PowerToTheNotables*RealisticBattleAiModule*SettlementIcons*SoundTheAlarm*SueLordFromFamily*TMCompanions*TrueCompanionTraitsSkills*TrueNobleOpinion*TrueRelations*CharacterReload*csx*zCulturedStart*zenDzeeMods_Heritage*zzBannerlordTweaks*_MODULES_",
+      "workingDirectory": "$(GameFolder)\\bin\\Win64_Shipping_Client",
+      "sqlDebugging": true
+    }
+  }
+}

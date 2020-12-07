@@ -40,7 +40,7 @@ namespace ManageRemoteCompanions
         {
             //typeof(InventoryLogic).GetMethod("InitializeRosters", BindingFlags.NonPublic | BindingFlags.Instance).Invoke(__instance, new object[] { leftItemRoster, rightItemRoster, rightMemberRoster, initialCharacterOfRightRoster });//pass whatever you want into this method... you don't need to use the original parameter
             
-            if (Settings.Instance.Enabled && Settings.Instance.ApplyInventoryPatch && rightMemberRoster.Contains(Hero.MainHero.CharacterObject))
+            if (Settings.Instance is { } settings && settings.Enabled && Settings.Instance.ApplyInventoryPatch && rightMemberRoster.Contains(Hero.MainHero.CharacterObject))
             {
                 TroopRoster newRoster = TroopRoster.CreateDummyTroopRoster();
                 newRoster.Add(rightMemberRoster);
@@ -81,7 +81,7 @@ namespace ManageRemoteCompanions
     {
         public static void Prefix(InventoryLogic __instance)
         {
-            if (Settings.Instance.Enabled && Settings.Instance.ApplyInventoryPatch)
+            if (Settings.Instance is { } settings && settings.Enabled && Settings.Instance.ApplyInventoryPatch)
                 foreach (CharacterObject c in __instance.RightMemberRoster.Troops)
                     if (c.IsHero && !__instance.OwnerParty.MemberRoster.Contains(c))
                         PatchInventoryDefaults.ResetCharacter(c);
@@ -137,7 +137,6 @@ namespace ManageRemoteCompanions
             
             foreach (Hero hero in Clan.PlayerClan.Heroes)
             {
-                //var isAlreadyOnList = ____characterList.ItemList.Where(e => e.StringItem == hero.Name.ToString());
                 bool isAlreadyOnList = ____characterList.ItemList.Where(e => e.StringItem == hero.Name.ToString()).Any();
                 if (hero.IsAlive && hero.IsActive && !hero.IsChild && hero != Hero.MainHero && isAlreadyOnList == false)
                 {

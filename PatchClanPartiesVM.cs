@@ -19,7 +19,7 @@ namespace ManageRemoteCompanions
 
         private static bool CanManageTroops(ClanPartyItemVM p)
         {
-            if (p != null && p.Party != null && p.Party.MobileParty != null && Settings.Instance.ManageTroops)
+            if (p != null && p.Party != null && p.Party.MobileParty != null && Settings.Instance is { } settings && settings.ManageTroops)
             {
                 if (p.Party.MobileParty.IsGarrison)
                     return Settings.Instance.ManageGarrisons;
