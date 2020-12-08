@@ -11,8 +11,8 @@ namespace ManageRemoteCompanions
         public override string FolderName => "ManageRemoteCompanions";
 
         // Only update Id version when making changes to settings options that are not backwards compatible.
-        public override string Id { get; } = "Dax.ManageRemoteCompanions_v2.0.0";
-
+        public override string Id { get; } = "ManageRemoteCompanions";
+        public override string FormatType => "json";
 
         [SettingPropertyBool("Enabled", Order = 1, RequireRestart = false, HintText = "Toggle this mod on or off.")]
         [SettingPropertyGroup("Enabled")]
