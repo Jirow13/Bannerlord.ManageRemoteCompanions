@@ -37,35 +37,20 @@ namespace ManageRemoteCompanions
         static bool Prefix(InventoryLogic __instance, ref ItemRoster[] ____rosters, ItemRoster leftItemRoster, ItemRoster rightItemRoster, ref TroopRoster rightMemberRoster, CharacterObject initialCharacterOfRightRoster)
         {
 
-            //if (Settings.Instance.Enabled && Settings.Instance.ApplyInventoryPatch && rightMemberRoster.Contains(Hero.MainHero.CharacterObject))
             if (Settings.Instance is { } settings && settings.Enabled && Settings.Instance.ApplyInventoryPatch && rightMemberRoster.Contains(Hero.MainHero.CharacterObject))
             {
-                TroopRoster newRoster = TroopRoster.CreateDummyTroopRoster();
-                newRoster.Add(rightMemberRoster);
                 PatchInventoryDefaults.DefaultCharacterEquipments.Clear();
 
 
                 foreach (Hero hero in Clan.PlayerClan.Heroes)
                 {
-                    if (hero.IsAlive && hero.IsActive && !hero.IsChild && hero != Hero.MainHero && !newRoster.Contains(hero.CharacterObject))
+                    if (hero.IsAlive && hero.IsActive && !hero.IsChild && hero != Hero.MainHero && !rightMemberRoster.Contains(hero.CharacterObject))
                     {
-                        newRoster.AddToCounts(hero.CharacterObject, 1);
+                        rightMemberRoster.AddToCounts(hero.CharacterObject, 1);
                         PatchInventoryDefaults.SetDefault(hero.CharacterObject);
                     }
                 }
 
-                /* No Longer Needed, so there's 1 less Loop to go through.
-                foreach (Hero hero in Clan.PlayerClan.Companions)
-                {
-                    if (hero.IsAlive && hero.IsPlayerCompanion && !newRoster.Contains(hero.CharacterObject))
-                    {
-                        newRoster.AddToCounts(hero.CharacterObject, 1);
-                        PatchInventoryDefaults.SetDefault(hero.CharacterObject);
-                    }
-                }
-                */
-
-                rightMemberRoster = newRoster;
                 ____rosters[0] = leftItemRoster;
                 ____rosters[1] = rightItemRoster;
                 typeof(InventoryLogic).GetField("<RightMemberRoster>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance).SetValue(__instance, rightMemberRoster);
@@ -89,29 +74,4 @@ namespace ManageRemoteCompanions
                         PatchInventoryDefaults.ResetCharacter(c);
         }
     }
-
-    [HarmonyPatch(typeof(SPInventoryVM), "CharacterList", MethodType.Getter)]
-    internal class SPInventoryVMPatch
-    {
-
-        static void Postfix(SelectorVM<SelectorItemVM> ____characterList)
-        {
-            
-            foreach (Hero hero in Clan.PlayerClan.Heroes)
-            {
-                bool isAlreadyOnList = ____characterList.ItemList.Where(e => e.StringItem == hero.Name.ToString()).Any();
-                if (hero.IsAlive && hero.IsActive && !hero.IsChild && hero != Hero.MainHero && isAlreadyOnList == false)
-                {
-                    ____characterList.AddItem(new SelectorItemVM(hero.Name));
-                }
-            }
-            return;
-        }
-
-        static bool Prepare()
-        {
-            return true;
-        }
-    }
-
 }
