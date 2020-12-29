@@ -11,6 +11,7 @@ using TaleWorlds.Core.ViewModelCollection;
 
 namespace ManageRemoteCompanions
 {
+ 
     internal class PatchInventoryDefaults
     {
         public static Dictionary<CharacterObject, Equipment[]> DefaultCharacterEquipments = new Dictionary<CharacterObject, Equipment[]>();
@@ -39,23 +40,26 @@ namespace ManageRemoteCompanions
 
             if (Settings.Instance is { } settings && settings.Enabled && Settings.Instance.ApplyInventoryPatch && rightMemberRoster.Contains(Hero.MainHero.CharacterObject))
             {
+                TroopRoster newRoster = TroopRoster.CreateDummyTroopRoster();
+                newRoster.Add(rightMemberRoster);
                 PatchInventoryDefaults.DefaultCharacterEquipments.Clear();
 
 
                 foreach (Hero hero in Clan.PlayerClan.Heroes)
                 {
-                    if (hero.IsAlive && hero.IsActive && !hero.IsChild && hero != Hero.MainHero && !rightMemberRoster.Contains(hero.CharacterObject))
+                    if (hero.IsAlive && hero.IsActive && !hero.IsChild && hero != Hero.MainHero && !newRoster.Contains(hero.CharacterObject))
                     {
-                        rightMemberRoster.AddToCounts(hero.CharacterObject, 1);
+                        newRoster.AddToCounts(hero.CharacterObject, 1);
                         PatchInventoryDefaults.SetDefault(hero.CharacterObject);
                     }
                 }
 
                 ____rosters[0] = leftItemRoster;
                 ____rosters[1] = rightItemRoster;
+                rightMemberRoster = newRoster;
                 typeof(InventoryLogic).GetField("<RightMemberRoster>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance).SetValue(__instance, rightMemberRoster);
                 typeof(InventoryLogic).GetField("<InitialEquipmentCharacter>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance).SetValue(__instance, initialCharacterOfRightRoster);
-                rightItemRoster.RemoveZeroCounts();
+                newRoster.RemoveZeroCounts();
                 typeof(InventoryLogic).GetMethod("SetCurrentStateAsInitial", BindingFlags.NonPublic | BindingFlags.Instance).Invoke(__instance, null);
             }
             return false;
@@ -68,10 +72,31 @@ namespace ManageRemoteCompanions
     {
         public static void Prefix(InventoryLogic __instance)
         {
-            if (Settings.Instance is { } settings && settings.Enabled && Settings.Instance.ApplyInventoryPatch)
+            if (Settings.Instance is { } settings && settings.Enabled && settings.ApplyInventoryPatch)
                 foreach (CharacterObject c in __instance.RightMemberRoster.Troops)
                     if (c.IsHero && !__instance.OwnerParty.MemberRoster.Contains(c))
                         PatchInventoryDefaults.ResetCharacter(c);
         }
+    }
+
+
+    [HarmonyPatch(typeof(SPInventoryVM), "CharacterList", MethodType.Getter)]
+    internal class SPInventoryVMPatchv2
+    {
+
+        static void Postfix(SelectorVM<SelectorItemVM> ____characterList)
+        {
+            foreach (Hero hero in Clan.PlayerClan.Heroes)
+            {
+                bool isAlreadyOnList = ____characterList.ItemList.Where(e => e.StringItem == hero.Name.ToString()).Any();
+                if (hero.IsAlive && hero.IsActive && !hero.IsChild && hero != Hero.MainHero && isAlreadyOnList == false)
+                {
+                    ____characterList.AddItem(new SelectorItemVM(hero.Name));
+                }
+            }
+            return;
+        }
+
+        //static bool Prepare() => Settings.Instance is { } settings && settings.ApplyInventoryPatch;
     }
 }
