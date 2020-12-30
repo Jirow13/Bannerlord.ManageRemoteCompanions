@@ -15,6 +15,7 @@ namespace ManageRemoteCompanions
         }
     }
 
+    /* Looks like this is no longer needed as of 1.5.6, as TW is allowing remote party skill mgmt?
     [HarmonyPatch(typeof(CampaignUIHelper), "GetAddFocusHintString")]
     internal class PatchRefreshCanAddFocus
     {
@@ -24,6 +25,7 @@ namespace ManageRemoteCompanions
                 isInSamePartyAsPlayer = true;
         }
     }
+    */
 
     [HarmonyPatch(typeof(CharacterVM), "CanAddFocusToSkillWithFocusAmount")]
     internal class PatchSkillFocus
