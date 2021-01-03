@@ -3,6 +3,8 @@ using TaleWorlds.CampaignSystem;
 using TaleWorlds.CampaignSystem.ViewModelCollection;
 using TaleWorlds.CampaignSystem.ViewModelCollection.CharacterDeveloper;
 
+// Deprecated in 1.5.6, as remote skill management is now part of the base game.
+
 namespace ManageRemoteCompanions
 {
     [HarmonyPatch(typeof(SkillVM), "IsPerkAvailable")]

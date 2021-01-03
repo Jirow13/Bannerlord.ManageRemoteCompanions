@@ -15,7 +15,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <NoWarn>1701;1702</NoWarn>
+    <NoWarn>1701;1702;IDE0051</NoWarn>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
 
@@ -51,8 +51,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="PatchInventoryManager - Copy.cs" />
-    <Compile Remove="PatchInventoryManager - old.cs" />
+    <Compile Remove="PatchCharacterDeveloper.cs" />
     <Compile Remove="Properties\AssemblyInfo.cs" />
   </ItemGroup>
 

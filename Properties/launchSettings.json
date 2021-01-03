@@ -3,9 +3,9 @@
     "Bannerlord": {
       "commandName": "Executable",
       "executablePath": "$(GameFolder)\\bin\\Win64_Shipping_Client\\Bannerlord.exe",
-      "commandLineArgs": "/singleplayer _MODULES_*Bannerlord.Harmony*BetterExceptionWindow*Bannerlord.ButterLib*Bannerlord.UIExtenderEx*Bannerlord.MBOptionScreen*Bannerlord.MBOptionScreen.MCMv3*Native*SandBoxCore*CustomBattle*Sandbox*StoryMode*Aragas.AltSaveMissingModuleFix*CustomSpawns*CombatBandage*Ctrl_Auto_Smelts*CraftedItemCopyright*CurryFavorByKillingBandits*DefectionOverhaul*DeveloperConsole*DiplomacyFixes*EconomyTweak_h*ExitSettlement*ExtendedFamily*HeroesMustDie*HousesCalradia*ImprovedGarrisons*InterestingClans*InterestingCompanions*MCTRDecayedisRevived*JTPrisonerRecruitment*KaosesPartySizes*KillBanditsRaiseRelations*LordRetinueUptier*UsefullCompanions*ManageRemoteCompanions*NPCRevamp*NobleNobles*Pacemaker*PartyScreenEnhancements*PowerToTheNotables*RealisticBattleAiModule*RTSCamera*SettlementIcons*SoundTheAlarm*SpecialLoot*CharacterReload*TMCompanions*TrueCompanionTraitsSkills*TrueNobleOpinion*TrueRelations*swadian armoury*VsRoyalArmoryRewritten*csx*zCulturedStart*zenDzeeMods_Heritage*PartyAIOverhaulCommands*zzBannerlordTweaks*_MODULES_",
+      "commandLineArgs": "/singleplayer _MODULES_*Bannerlord.Harmony*BetterExceptionWindow*Bannerlord.ButterLib*Bannerlord.UIExtenderEx*Bannerlord.MBOptionScreen*Bannerlord.MBOptionScreen.MCMv3*Native*SandBoxCore*CustomBattle*Sandbox*StoryMode*Aragas.AltSaveMissingModuleFix*CombatBandage*CraftedItemCopyright*Ctrl_Auto_Smelts*CurryFavorByKillingBandits*DeveloperConsole*DiplomacyFixes*EconomyTweak_h*ExtendedFamily*ExitSettlement*HousesCalradia*ImprovedGarrisons*InterestingClans*MCTRDecayedisRevived*UsefullCompanions*InterestingCompanions*KillBanditsRaiseRelations*KaosesPartySizes*NPCRevamp*ManageRemoteCompanions*NobleNobles*Pacemaker*PartyScreenEnhancements*RealisticBattleAiModule*LordRetinueUptier*csx*swadian armoury*CharacterReload*zCulturedStart*VsRoyalArmoryRewritten*zzBannerlordTweaks*_MODULES_",
       "workingDirectory": "$(GameFolder)\\bin\\Win64_Shipping_Client",
-      "sqlDebugging": true
+      "sqlDebugging": false
     }
   }
 }

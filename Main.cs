@@ -14,7 +14,7 @@ namespace ManageRemoteCompanions
 
             try
             {
-                new Harmony("com.bannerlord.ManageRemoteCompanions").PatchAll();
+                new Harmony("com.bannerlord.Jiros.ManageRemoteCompanionsAndParties").PatchAll();
             }
             catch (Exception e)
             {

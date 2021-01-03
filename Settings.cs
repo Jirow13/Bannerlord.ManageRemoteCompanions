@@ -18,28 +18,30 @@ namespace ManageRemoteCompanions
         [SettingPropertyGroup("Enabled")]
         public bool Enabled { get; set; } = true;
 
+        /* Deprecated in v1.5.6 - It's part of the base game now.
         [SettingPropertyBool("Charcter Upgrades", Order = 2, RequireRestart = false, HintText = "Allows allocating perks, attribute points and focus points for remote companions.")]
         [SettingPropertyGroup("Enabled")]
         public bool CharacterUpgrades { get; set; } = true;
+        */
 
-        [SettingPropertyBool("Manage Equipment", Order = 3, RequireRestart = false, HintText = "Adds all remote companions and adult family members to the Inventory screen so their equipment can be managed.")]
+        [SettingPropertyBool("Manage Equipment", Order = 3, HintText = "Adds all remote companions and adult family members to the Inventory screen so their equipment can be managed.")]
         [SettingPropertyGroup("Enabled")]
-        public bool ApplyInventoryPatch { get; set; } = false;
+        public bool ApplyInventoryPatch { get; set; } = true;
 
-        [SettingPropertyBool("Enable Manage Troops (ALT + Click)", Order = 4, RequireRestart = false, HintText = "Enable the management of party troops from the Clan Parties screen. Press ALT + click on the party to open the management UI.")]
-        [SettingPropertyGroup("Enabled/Manage Troops")]
-        public bool ManageTroops { get; set; } = false;
+        [SettingPropertyBool("Enable Manage Troops (ALT + Click)", Order = 4, IsToggle = true , RequireRestart = false, HintText = "Enable the management of party troops from the Clan Parties screen. Press ALT + click on the party to open the management UI.")]
+        [SettingPropertyGroup("Enabled/Enable Manage Troops (ALT + Click)")]
+        public bool ManageTroops { get; set; } = true;
 
         [SettingPropertyBool("Manage Troops of Companion Parties", Order = 5, RequireRestart = false, HintText = "Enables troop management for Clan Parties.")]
-        [SettingPropertyGroup("Enabled/Manage Troops")]
+        [SettingPropertyGroup("Enabled/Enable Manage Troops (ALT + Click)")]
         public bool ManageParties { get; set; } = true;
 
         [SettingPropertyBool("Manage Troops of Companion Caravans", Order = 6, RequireRestart = false, HintText = "Enables troop management for Clan Caravans.")]
-        [SettingPropertyGroup("Enabled/Manage Troops")]
+        [SettingPropertyGroup("Enabled/Enable Manage Troops (ALT + Click)")]
         public bool ManageCaravans { get; set; } = true;
 
         [SettingPropertyBool("Manage Settlement Garrisons", Order = 7, RequireRestart = false, HintText = "Enables troop management for Clan Settlement Garrisons.")]
-        [SettingPropertyGroup("Enabled/Manage Troops")]
-        public bool ManageGarrisons { get; set; } = false;
+        [SettingPropertyGroup("Enabled/Enable Manage Troops (ALT + Click)")]
+        public bool ManageGarrisons { get; set; } = true;
     }
 }

@@ -64,6 +64,8 @@ namespace ManageRemoteCompanions
             }
             return false;
         }
+
+        static bool Prepare() => Settings.Instance is { } settings && settings.ApplyInventoryPatch;
     }
 
 
@@ -77,6 +79,8 @@ namespace ManageRemoteCompanions
                     if (c.IsHero && !__instance.OwnerParty.MemberRoster.Contains(c))
                         PatchInventoryDefaults.ResetCharacter(c);
         }
+
+        static bool Prepare() => Settings.Instance is { } settings && settings.ApplyInventoryPatch;
     }
 
 
@@ -97,6 +101,6 @@ namespace ManageRemoteCompanions
             return;
         }
 
-        //static bool Prepare() => Settings.Instance is { } settings && settings.ApplyInventoryPatch;
+        static bool Prepare() => Settings.Instance is { } settings && settings.ApplyInventoryPatch;
     }
 }
