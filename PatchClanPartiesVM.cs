@@ -21,12 +21,12 @@ namespace ManageRemoteCompanions
         {
             if (p != null && p.Party != null && p.Party.MobileParty != null && Settings.Instance is { } settings && settings.ManageTroops)
             {
-                if (p.Party.MobileParty.IsGarrison)
-                    return Settings.Instance.ManageGarrisons;
-                else if (p.Party.MobileParty.IsCaravan)
-                    return Settings.Instance.ManageCaravans;
-                else if (p.Party.MobileParty.LeaderHero != Hero.MainHero)
-                    return Settings.Instance.ManageParties;
+                if (p.Party.MobileParty.IsGarrison && settings.ManageGarrisons)
+                    return settings.ManageGarrisons;
+                else if (p.Party.MobileParty.IsCaravan && settings.ManageCaravans)
+                    return settings.ManageCaravans;
+                else if (p.Party.MobileParty.LeaderHero != Hero.MainHero && settings.ManageParties)
+                    return settings.ManageParties;
             }
             return false;
         }
