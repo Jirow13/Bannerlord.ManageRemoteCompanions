@@ -12,7 +12,7 @@ using TaleWorlds.Core.ViewModelCollection;
 namespace ManageRemoteCompanions
 {
  
-    internal class PatchInventoryDefaults
+    public class PatchInventoryDefaults
     {
         public static Dictionary<CharacterObject, Equipment[]> DefaultCharacterEquipments = new Dictionary<CharacterObject, Equipment[]>();
 
@@ -32,13 +32,13 @@ namespace ManageRemoteCompanions
     }
 
     [HarmonyPatch(typeof(InventoryLogic), "InitializeRosters")]
-    internal class PatchInventoryInitRosters
+    public  class PatchInventoryInitRosters
     {
 
         static bool Prefix(InventoryLogic __instance, ref ItemRoster[] ____rosters, ItemRoster leftItemRoster, ItemRoster rightItemRoster, ref TroopRoster rightMemberRoster, CharacterObject initialCharacterOfRightRoster)
         {
 
-            if (Settings.Instance is { } settings && settings.Enabled && Settings.Instance.ApplyInventoryPatch && rightMemberRoster.Contains(Hero.MainHero.CharacterObject))
+            if (Settings.Instance is { } settings && (settings.Enabled && settings.ApplyInventoryPatch && rightMemberRoster.Contains(Hero.MainHero.CharacterObject)))
             {
                 TroopRoster newRoster = TroopRoster.CreateDummyTroopRoster();
                 newRoster.Add(rightMemberRoster);
@@ -61,46 +61,50 @@ namespace ManageRemoteCompanions
                 typeof(InventoryLogic).GetField("<InitialEquipmentCharacter>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance).SetValue(__instance, initialCharacterOfRightRoster);
                 newRoster.RemoveZeroCounts();
                 typeof(InventoryLogic).GetMethod("SetCurrentStateAsInitial", BindingFlags.NonPublic | BindingFlags.Instance).Invoke(__instance, null);
+                return false;
             }
-            return false;
+            return true;
         }
 
-        static bool Prepare() => Settings.Instance is { } settings && settings.ApplyInventoryPatch;
+        //static bool Prepare() => Settings.Instance is { } settings && settings.ApplyInventoryPatch;
     }
 
 
     [HarmonyPatch(typeof(InventoryLogic), "ResetLogic")]
-    internal class PatchInventoryReset
+    public class PatchInventoryReset
     {
         public static void Prefix(InventoryLogic __instance)
         {
-            if (Settings.Instance is { } settings && settings.Enabled && settings.ApplyInventoryPatch)
+            if (Settings.Instance is { } settings && (settings.Enabled && settings.ApplyInventoryPatch))
                 foreach (CharacterObject c in __instance.RightMemberRoster.Troops)
                     if (c.IsHero && !__instance.OwnerParty.MemberRoster.Contains(c))
                         PatchInventoryDefaults.ResetCharacter(c);
         }
 
-        static bool Prepare() => Settings.Instance is { } settings && settings.ApplyInventoryPatch;
+        //static bool Prepare() => Settings.Instance is { } settings && settings.ApplyInventoryPatch;
     }
 
 
     [HarmonyPatch(typeof(SPInventoryVM), "CharacterList", MethodType.Getter)]
-    internal class SPInventoryVMPatchv2
+    public class SPInventoryVMPatchv2
     {
 
         static void Postfix(SelectorVM<SelectorItemVM> ____characterList)
         {
-            foreach (Hero hero in Clan.PlayerClan.Heroes)
+            if (Settings.Instance is { } settings && (settings.Enabled && settings.ApplyInventoryPatch))
             {
-                bool isAlreadyOnList = ____characterList.ItemList.Where(e => e.StringItem == hero.Name.ToString()).Any();
-                if (hero.IsAlive && hero.IsActive && !hero.IsChild && hero != Hero.MainHero && isAlreadyOnList == false)
+                foreach (Hero hero in Clan.PlayerClan.Heroes)
                 {
-                    ____characterList.AddItem(new SelectorItemVM(hero.Name));
+                    bool isAlreadyOnList = ____characterList.ItemList.Where(e => e.StringItem == hero.Name.ToString()).Any();
+                    if (hero.IsAlive && hero.IsActive && !hero.IsChild && hero != Hero.MainHero && isAlreadyOnList == false)
+                    {
+                        ____characterList.AddItem(new SelectorItemVM(hero.Name));
+                    }
                 }
             }
             return;
         }
 
-        static bool Prepare() => Settings.Instance is { } settings && settings.ApplyInventoryPatch;
+        //static bool Prepare() => Settings.Instance is { } settings && settings.ApplyInventoryPatch;
     }
 }
